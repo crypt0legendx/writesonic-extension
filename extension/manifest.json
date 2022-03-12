@@ -1,0 +1,81 @@
+{
+  "manifest_version": 3,
+  "name": "Writesonic",
+  "description": "Writesonic Chrome Extension",
+  "version": "1.0.0",
+  "host_permissions": [
+    "*://*.writesonic.com/*",
+    "http://localhost:3000/*"
+  ],
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "favicon.png"
+  },
+  "icons": {
+    "16": "favicon.png",
+    "32": "favicon.png",
+    "48": "favicon.png",
+    "128": "favicon.png"
+  },
+  "background": {
+    "service_worker": "/extension/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "*docs.google.com*"
+      ],
+      "js": [
+        "/extension/initializeUI.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "js": [
+        "/extension/docs/init.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/ui/index.js",
+        "/ui/vendor.js",
+        "/ui/index.css",
+        "/assets/img/saly.png",
+        "/assets/img/logo.png",
+        "/assets/img/arrow-left.svg",
+        "/assets/img/expand.svg",
+        "/assets/img/misuse.svg",
+        "/assets/img/rewrite.svg",
+        "/assets/img/shorten.svg",
+        "favicon.png",
+        "/extension/utils.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "/extension/docs/utils.js"
+      ],
+      "matches": [
+        "*://docs.google.com/*"
+      ]
+    }
+  ]
+}
